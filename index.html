@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f0ff'><circle cx='12' cy='12' r='10'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HAVOC LAB: Quantum Physics & Ragdoll Chaos</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="app-container">
+      <canvas id="viewport-canvas"></canvas>
+
+      <!-- Top HUD Header -->
+      <header id="top-hud" class="cyber-panel">
+        <div class="logo-area">
+          <div class="logo-title">HAVOC LAB</div>
+          <span class="logo-badge">QUANTUM V2</span>
+        </div>
+
+        <div class="center-hud-controls">
+          <button id="mode-sandbox" class="mode-tab-btn active">⚡ 샌드박스 놀이터</button>
+          <button id="mode-challenges" class="mode-tab-btn">🏆 챌린지 미션</button>
+        </div>
+
+        <div class="hud-actions">
+          <button id="btn-slowmo" class="bullet-time-btn" title="시간 왜곡 슬로우 모션 (Spacebar)">
+            <span class="btn-icon">⏱️</span> BULLET TIME [SPACE]
+          </button>
+          <button id="btn-sound" class="icon-btn" title="사운드 토글"></button>
+          <button id="btn-bgm" class="icon-btn" title="신스웨이브 BGM 토글"></button>
+          <button id="btn-clear" class="icon-btn" title="화면 비우기"></button>
+        </div>
+      </header>
+
+      <!-- Left Toolbox (Sandbox Mode) -->
+      <aside id="left-toolbox" class="cyber-panel">
+        <div class="tool-item active" data-tool="grab" data-tooltip="잡기 & 던지기 (Grab)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">GRAB</span>
+        </div>
+        <div class="tool-item" data-tool="repulsor" data-tooltip="충격파 펄스건 (Repulsor Pulse)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">PULSE</span>
+        </div>
+        <div class="tool-item" data-tool="ragdoll" data-tooltip="래그돌 인형 소환 (Ragdoll)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">DOLL</span>
+        </div>
+        <div class="tool-item" data-tool="bomb" data-tooltip="C4 시한 폭탄 (Bomb / TNT)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">BOMB</span>
+        </div>
+        <div class="tool-item" data-tool="blackhole" data-tooltip="블랙홀 발생기 (Singularity)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">VOID</span>
+        </div>
+        <div class="tool-item" data-tool="portal" data-tooltip="웜홀 포탈 게이트 (A/B Portals)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">PORTAL</span>
+        </div>
+        <div class="tool-item" data-tool="ball" data-tooltip="고탄성 고무공 (Bouncy Ball)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">BALL</span>
+        </div>
+        <div class="tool-item" data-tool="box" data-tooltip="네온 큐브 블록 (Box)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">BOX</span>
+        </div>
+        <div class="tool-item" data-tool="domino" data-tooltip="도미노 블록 (Domino)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">DOMINO</span>
+        </div>
+        <div class="tool-item" data-tool="jelly" data-tooltip="소프트바디 젤리 생명체 (Jelly Blob)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">JELLY</span>
+        </div>
+        <div class="tool-item" data-tool="jumppad" data-tooltip="슈퍼 점프대 트램펄린 (Jump Pad)">
+          <span class="tool-icon"></span>
+          <span class="tool-label">SPRING</span>
+        </div>
+      </aside>
+
+      <!-- Mission Info Panel (Challenges Mode) -->
+      <div id="mission-panel" class="cyber-panel" style="display: none;">
+        <div class="mission-level-badge" id="mission-badge">LEVEL 1</div>
+        <div class="mission-title" id="mission-title">Mission Title</div>
+        <div class="mission-desc" id="mission-desc">Mission description details go here.</div>
+        <div class="mission-hint" id="mission-hint">힌트: 마우스로 래그돌을 잡아서 던지세요.</div>
+        <div class="mission-progress-box" id="mission-progress">진행도: 0%</div>
+        <div class="mission-nav-btns">
+          <button id="btn-mission-reset" class="action-btn danger">다시 시도 (Reset)</button>
+          <button id="btn-mission-next" class="action-btn primary">다음 미션 ➔</button>
+        </div>
+      </div>
+
+      <!-- Bottom Gravity Bar -->
+      <footer id="bottom-gravity-bar" class="cyber-panel">
+        <span class="gravity-label">🌐 중력장 제어:</span>
+        <button class="gravity-btn active" data-gravity="normal">지구 (1.0G)</button>
+        <button class="gravity-btn" data-gravity="zero">무중력 (0.0G)</button>
+        <button class="gravity-btn" data-gravity="reverse">반중력 (-1.0G)</button>
+        <button class="gravity-btn" data-gravity="moon">달 (0.25G)</button>
+        <button class="gravity-btn" data-gravity="heavy">목성 (2.4G)</button>
+        <button class="gravity-btn" data-gravity="left">좌측 중력 (◀)</button>
+        <button class="gravity-btn" data-gravity="right">우측 중력 (▶)</button>
+      </footer>
+
+      <!-- Tip info bar -->
+      <div id="tip-banner">💡 Tip: 마우스로 모든 물체를 던질 수 있으며, [SPACE]를 누르면 슬로우 모션이 켜집니다!</div>
+
+      <!-- Victory Modal -->
+      <div id="victory-modal" class="cyber-panel">
+        <div class="victory-title">🎉 MISSION CLEAR!</div>
+        <div class="victory-desc">완벽하게 양자 미션을 성공했습니다! 다음 실험으로 넘어갈 준비가 되셨나요?</div>
+        <button id="btn-modal-next" class="action-btn primary" style="width: 100%;">다음 레벨 도전</button>
+      </div>
+    </div>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

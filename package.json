@@ -1,0 +1,22 @@
+{
+  "name": "funny2-from-antigravity",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/matter-js": "^0.20.2",
+    "gh-pages": "^6.3.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "matter-js": "^0.20.0"
+  }
+}
